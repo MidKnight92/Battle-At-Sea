@@ -5,7 +5,7 @@ User-Stories:
   User needs to be able to see two grids
   User needs to be declare the grid locations they want place their fleet
     On the grid each Player will click desired position for each ship 
-  After both players have clicked their locations for their fleet the battle will commence  
+  After both players have clicked their locations for their fleet the battle will commence 
   User needs to be able to select grid locations of their enemy
     On the grid each player will select a single box to fire on their enemy
   User needs to be able to get feedback if their selection was a hit or miss on the opponents grid
@@ -31,7 +31,6 @@ The set-up:
 
   
   
-  Wireframe:
-  ![alt text][wireframe.jpg]
+![Wireframe](https://user-images.githubusercontent.com/50332616/66237290-57a13900-e6ba-11e9-8933-ea4dac69490f.jpg)
 
  
