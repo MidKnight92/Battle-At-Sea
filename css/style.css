@@ -77,6 +77,26 @@ main {
 	margin-top: 90px;
 }
 
+.startBattleButton {
+font-size: 10px; 
+line-height: 10px; 
+padding: 12px; 
+font-family: 'Press Start 2P', cursive; 
+background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); 
+box-shadow: rgb(0, 0, 0) 5px 5px 25px 5px; 
+border: 1px solid rgb(28, 110, 164); 
+display: inline-block;
+margin-top: 50px;
+margin-left: 50px  
+}
+
+.startBattleButton:hover {
+background: #1C6EA4; 
+}
+
+.startBattleButton:active {
+background: #144E75;
+ }
 /*Styles for hits and misses*/
 #clickSelect {
 	-moz-box-shadow:    inset 0 0 10px #ffffff;
