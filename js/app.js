@@ -60,6 +60,27 @@ const player2 = {
 	}]
 };
 
+const game = {
+	columns: 10,
+	rows: 10,
+	board: [],
+	pickedGridItems: [],
+	p1Fleet: player1['Fleet'],
+	p1RemaingFleet: [],
+	make2Darray(columns, rows){
+		let arr = new Array(this['columns']);
+		for (let i = 0; i < arr.length; i++) {
+			arr[i] = new Array(this['rows']);
+		}
+		return arr;
+	},
+
+	startGame(){
+
+	}
+
+}
+
 
 // ------------------- Event Listners ---------------------
 $('.startGameButtonStyle').on('click', (e) => {
