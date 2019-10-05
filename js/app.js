@@ -1,4 +1,4 @@
-console.log('Linked');
+console.log('Welcome');
 
 
 $('.grid-container').on('click', (e) => {
