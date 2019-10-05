@@ -5,25 +5,60 @@ const player1 = {
 	misses: 0,
 	Fleet: [{
 		typeOfShip: 'Destroyer',
-		length: 2, 
+		length: 2,
+		gridPlacement: [], 
 	},
 	{
 		typeOfShip: 'Cruiser', 
 		length: 3,
+		gridPlacement: [], 
 	},
 	{
 		typeOfShip: 'Submarine',
 		length: 3,
+		gridPlacement: [], 
 	},	
 	{
 		typeOfShip: 'Battleship',
 		length: 4,
+		gridPlacement: [], 
 	},
 	{
 		typeOfShip:	'Aircraft Carrier',
-		length: 5
+		length: 5,
+		gridPlacement: [] 
 	}]
-}
+};
+
+const player2 = {
+	hits: 0,
+	misses: 0,
+	Fleet: [{
+		typeOfShip: 'Destroyer',
+		length: 2,
+		gridPlacement: [], 
+	},
+	{
+		typeOfShip: 'Cruiser', 
+		length: 3,
+		gridPlacement: [], 
+	},
+	{
+		typeOfShip: 'Submarine',
+		length: 3,
+		gridPlacement: [], 
+	},	
+	{
+		typeOfShip: 'Battleship',
+		length: 4,
+		gridPlacement: [], 
+	},
+	{
+		typeOfShip:	'Aircraft Carrier',
+		length: 5,
+		gridPlacement: [] 
+	}]
+};
 
 
 // ------------------- Event Listners ---------------------
