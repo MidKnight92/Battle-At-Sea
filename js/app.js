@@ -1,5 +1,32 @@
-console.log('Welcome');
+console.log('Welcome to Battle-At-Sea');
 
+const player1 = {
+	hits: 0,
+	misses: 0,
+	Fleet: [{
+		typeOfShip: 'Destroyer',
+		length: 2, 
+	},
+	{
+		typeOfShip: 'Cruiser', 
+		length: 3,
+	},
+	{
+		typeOfShip: 'Submarine',
+		length: 3,
+	},	
+	{
+		typeOfShip: 'Battleship',
+		length: 4,
+	},
+	{
+		typeOfShip:	'Aircraft Carrier',
+		length: 5
+	}]
+}
+
+
+// ------------------- Event Listners ---------------------
 $('.startGameButtonStyle').on('click', (e) => {
 	$('.startGameButtonStyle').text('Restart Game');
 	$('.startGameButtonStyle').attr('id', 'restartBattle');
