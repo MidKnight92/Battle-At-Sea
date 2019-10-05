@@ -77,7 +77,7 @@ main {
 	margin-top: 90px;
 }
 
-.startBattleButton {
+.startGameButtonStyle, .restartButtonStyle {
 font-size: 10px; 
 line-height: 10px; 
 padding: 12px; 
@@ -90,11 +90,11 @@ margin-top: 50px;
 margin-left: 50px  
 }
 
-.startBattleButton:hover {
+.startGameButtonStyle:hover, .restartButtonStyle:hover {
 background: #1C6EA4; 
 }
 
-.startBattleButton:active {
+.startGameButtonStyle:active, .restartButtonStyle:active {
 background: #144E75;
  }
 /*Styles for hits and misses*/
