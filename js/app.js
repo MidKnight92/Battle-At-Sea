@@ -189,7 +189,9 @@ const game = {
 		$('#p2FleetRemainingStats').text(`Fleet Remaining: ${this.p2RemaingFleet}`);
 		$('#p2HitsStats').text(`Hits: ${player2.hits}`);
 		$('#p2MissesStats').text(`Misses: ${player2.misses}`);
-
+	},
+	displayInstructions(){
+		alert(`The Goal:\n - Sink your opponnet's fleet before the opponnet sinks your fleet.\n\n How To Play:\n - Players will place fleet on their respective battle grid.\n - Once fleets have been placed, each player will take turn firing at their opponnets battle grid by clicking on their opponnet's grid.\n - Players will fire on opponnet's battle grid until they miss.`)
 	}
 }
 
@@ -213,4 +215,8 @@ $('.player1-battle-grid').on('click', (e) => {
 
 $('.player2-battle-grid').on('click', (e) => {
 	
+});
+
+$('#instructions').on('click', (e) => {
+	game.displayInstructions();
 });

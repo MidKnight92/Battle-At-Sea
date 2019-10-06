@@ -102,7 +102,25 @@ background: #1C6EA4;
 
 .startGameButtonStyle:active, .restartButtonStyle:active {
 background: #144E75;
- }
+}
+
+#instructions {
+	display: inline-block;
+	margin-top: 45px;
+	margin-left: 30px;
+	text-align: left;
+	font-size: 8px;
+	font-family: 'Press Start 2P', cursive;
+	color: white;
+	text-decoration: underline;
+	padding: 10px;
+}
+
+#instructions:hover {
+	cursor: pointer;
+	color: black;
+	text-decoration: underline;
+}
 /*Styles for hits and misses*/
 
 #hit {
