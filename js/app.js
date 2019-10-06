@@ -136,24 +136,34 @@ const game = {
 		}
 		return arr;
 	},
+	//Changes the button text for Start Game to Restart Game
 	changeStartGameText(){
 		$('.startGameButtonStyle').text('Restart Game');
 		$('.startGameButtonStyle').attr('id', 'restartBattle');
 		$('#restartBattle').removeClass('startGameButtonStyle');
 		$('#restartBattle').addClass('restartButtonStyle');
 	},
+	//Changes the button text for Start Game to Restart Game --- W.I.P.
 	changeRestartGameText(){
 		$('.restartButtonStyle').text('Start Game');
 		$('.restartButtonStyle').attr('id', 'startBattle');
 		$('#restartGameButton').addClass('class','startBattleButton');
 		$('#restartGameButton').removeClass('restartButtonStyle')
 		$('.startBattleButton').removeAttr('#restartGameButton');
+	},
+	hitTarget(player, target){
+		$(target).attr('id','hit');
+		player.hits ++;
+	},
+	missedTarget(player, target){
+		$(player).attr('id','miss');
+		player.misses ++;
 	}
 }
 
 game.make2Darray()
 
-// ------------------- Event Listners ---------------------
+// ------------------- Event Listners --------------------- //
 $('.startGameButtonStyle').on('click', (e) => {
 	game.make2Darray();
 	game.changeStartGameText();
@@ -167,6 +177,7 @@ $('.restartButtonStyle').on('click', (e) => {
 $('.player1-battle-grid').on('click', (e) => {
 	console.log(e.target.dataset);
 	console.log(e.target.dataset.whichSquareMoreWords);
+	$(e).attr('id', 'clickSelect')
 });
 
 $('.player2-battle-grid').on('click', (e) => {
