@@ -69,6 +69,7 @@ const game = {
 	pickedGridItems: [],
 	p1Fleet: player1['Fleet'],
 	p1RemaingFleet: [],
+	p2RemaingFleet: [],
 	carrier: [
 			  [[0,0,0,0,0,0,0],
 			   [0,'c','c','c','c','c',0], 
@@ -158,6 +159,15 @@ const game = {
 	missedTarget(player, target){
 		$(player).attr('id','miss');
 		player.misses ++;
+	},
+	updateBattleReport(player1, player2){
+		$('#p1FleetRemainingStats').text(`Fleet Remaining: ${this.p1RemaingFleet}`);
+		$('#p1HitsStats').text(`Hits: ${player1.hits}`);
+		$('#p1MissesStats').text(`Misses: ${player1.misses}`);
+		$('#p2FleetRemainingStats').text(`Fleet Remaining: ${this.p2RemaingFleet}`);
+		$('#p2HitsStats').text(`Hits: ${player2.hits}`);
+		$('#p2MissesStats').text(`Misses: ${player2.misses}`);
+
 	}
 }
 
@@ -177,7 +187,7 @@ $('.restartButtonStyle').on('click', (e) => {
 $('.player1-battle-grid').on('click', (e) => {
 	console.log(e.target.dataset);
 	console.log(e.target.dataset.whichSquareMoreWords);
-	$(e).attr('id', 'clickSelect')
+	// $(e).attr('id', 'clickSelect')
 });
 
 $('.player2-battle-grid').on('click', (e) => {
