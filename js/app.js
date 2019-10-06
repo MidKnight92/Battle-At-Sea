@@ -67,10 +67,70 @@ const game = {
 	vacant: 0,
 	board: [],
 	pickedGridItems: [],
-	p1Fleet: player1['Fleet'],
-	p1RemaingFleet: [],
-	p2RemaingFleet: [],
-	carrier: [
+	Fleet: [{
+		typeOfShip: 'Destroyer',
+		length: 2,
+		gridPlacement: [
+			    [[0,0,0,0],
+			     [0,'d','d',0], 
+			     [0,0,0,0]],
+  
+  			     [[0,0,0],
+  			      [0,'d',0],
+  			      [0,'d',0],
+			      [0,0,0]]
+								], 
+	},
+	{
+		typeOfShip: 'Cruiser', 
+		length: 3,
+		gridPlacement: [
+			    [[0,0,0,0,0],
+			     [0,'c','c','c',0], 
+			     [0,0,0,0,0]],
+  
+  			     [[0,0,0],
+  			      [0,'c',0],
+  			      [0,'c',0],
+  			      [0,'c',0],
+			      [0,0,0]]
+							 ], 
+	},
+	{
+		typeOfShip: 'Submarine',
+		length: 3,
+		gridPlacement: [
+			    [[0,0,0,0,0],
+			     [0,'s','s','s',0], 
+			     [0,0,0,0,0]],
+  
+  			     [[0,0,0],
+  			      [0,'s',0],
+  			      [0,'s',0],
+  			      [0,'s',0],
+			      [0,0,0]]
+							 ],	 
+	},	
+	{
+		typeOfShip: 'Battleship',
+		length: 4,
+		gridPlacement: [
+			    [[0,0,0,0,0,0],
+			     [0,'b','b','b','b',0], 
+			     [0,0,0,0,0,0]],
+  
+  			     [[0,0,0],
+  			      [0,'b',0],
+  			      [0,'b',0],
+  			      [0,'b',0],
+  			      [0,'b',0],
+			      [0,0,0]]
+							 ], 
+	},
+	{
+		typeOfShip:	'Aircraft Carrier',
+		length: 5,
+		gridPlacement: [
 			  [[0,0,0,0,0,0,0],
 			   [0,'c','c','c','c','c',0], 
 			   [0,0,0,0,0,0,0]],
@@ -82,51 +142,10 @@ const game = {
 			   	[0,'c',0],
 			   	[0,'c',0],
 			    [0,0,0]]
-							],
-	battleship: [
-			    [[0,0,0,0,0,0],
-			     [0,'b','b','b','b',0], 
-			     [0,0,0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'b',0],
-  			      [0,'b',0],
-  			      [0,'b',0],
-  			      [0,'b',0],
-			      [0,0,0]]
-							 ],
-	cruiser: [
-			    [[0,0,0,0,0],
-			     [0,'c','c','c',0], 
-			     [0,0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'c',0],
-  			      [0,'c',0],
-  			      [0,'c',0],
-			      [0,0,0]]
-							 ],	
-	submarine: [
-			    [[0,0,0,0,0],
-			     [0,'s','s','s',0], 
-			     [0,0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'s',0],
-  			      [0,'s',0],
-  			      [0,'s',0],
-			      [0,0,0]]
-							 ],	
-	destroyer: [
-			    [[0,0,0,0],
-			     [0,'d','d',0], 
-			     [0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'d',0],
-  			      [0,'d',0],
-			      [0,0,0]]
-								],												
+							]
+	}],
+	p1RemaingFleet: [],
+	p2RemaingFleet: [],												
 	//make2darray creates a 10 by 10 array of arrays all containg 0 values														
 	make2Darray(columns, rows){
 		let arr = new Array(this['columns']);
@@ -136,6 +155,9 @@ const game = {
 			arr[i].fill(0);
 		}
 		return arr;
+	},
+	placeFleet(player){
+		alert(`${player} place your fleet:\n-The ${this.Fleet[0]['typeOfShip']} has a length of ${this.Fleet[0]['length']}.\n-The ${this.Fleet[1]['typeOfShip']} has a length of ${this.Fleet[1]['length']}.\n-The ${this.Fleet[2]['typeOfShip']} has a length of ${this.Fleet[2]['length']}.\n-The ${this.Fleet[3]['typeOfShip']} has a length of ${this.Fleet[3]['length']}.\n-The ${this.Fleet[4]['typeOfShip']} has a length of ${this.Fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
 	},
 	//Changes the button text for Start Game to Restart Game
 	changeStartGameText(){
@@ -187,7 +209,6 @@ $('.restartButtonStyle').on('click', (e) => {
 $('.player1-battle-grid').on('click', (e) => {
 	console.log(e.target.dataset);
 	console.log(e.target.dataset.whichSquareMoreWords);
-	// $(e).attr('id', 'clickSelect')
 });
 
 $('.player2-battle-grid').on('click', (e) => {
