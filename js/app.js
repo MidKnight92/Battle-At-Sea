@@ -126,6 +126,7 @@ const game = {
   			      [0,'d',0],
 			      [0,0,0]]
 								],												
+	//make2darray creates a 10 by 10 array of arrays all containg 0 values														
 	make2Darray(columns, rows){
 		let arr = new Array(this['columns']);
 		arr.fill(0)
@@ -135,23 +136,32 @@ const game = {
 		}
 		return arr;
 	},
+	changeStartGameText(){
+		$('.startGameButtonStyle').text('Restart Game');
+		$('.startGameButtonStyle').attr('id', 'restartBattle');
+		$('#restartBattle').removeClass('startGameButtonStyle');
+		$('#restartBattle').addClass('restartButtonStyle');
+	},
+	changeRestartGameText(){
+		$('.restartButtonStyle').text('Start Game');
+		$('.restartButtonStyle').attr('id', 'startBattle');
+		$('#restartGameButton').addClass('class','startBattleButton');
+		$('#restartGameButton').removeClass('restartButtonStyle')
+		$('.startBattleButton').removeAttr('#restartGameButton');
+	}
 }
 
 game.make2Darray()
 
 // ------------------- Event Listners ---------------------
 $('.startGameButtonStyle').on('click', (e) => {
-	$('.startGameButtonStyle').text('Restart Game');
-	$('.startGameButtonStyle').attr('id', 'restartBattle');
-	$('#restartBattle').removeClass('startGameButtonStyle');
-	$('#restartBattle').addClass('restartButtonStyle');	
+	game.make2Darray();
+	game.changeStartGameText();
+
 });
 
 $('.restartButtonStyle').on('click', (e) => {
-	// $('.restartButtonStyle').text('Start Game');
-	// $('#restartGameButton').addClass('class','startBattleButton');
-	// $('#restartGameButton').removeClass('restartButtonStyle')
-	// $('.startBattleButton').removeAttr('#restartGameButton');	
+	game.changeRestartGameText()	
 });
 
 $('.player1-battle-grid').on('click', (e) => {
