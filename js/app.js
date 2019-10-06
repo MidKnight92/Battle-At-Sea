@@ -63,7 +63,8 @@ const player2 = {
 
 const game = {
 	columns: 10,
-	vacant:[],
+	rows: 10,
+	vacant: 0,
 	board: [],
 	pickedGridItems: [],
 	p1Fleet: player1['Fleet'],
@@ -127,18 +128,16 @@ const game = {
 								],												
 	make2Darray(columns, rows){
 		let arr = new Array(this['columns']);
+		arr.fill(0)
 		for (let i = 0; i < arr.length; i++) {
 			arr[i] = new Array(this['rows']);
+			arr[i].fill(0);
 		}
 		return arr;
 	},
-
-	startGame(){
-
-	}
-
 }
 
+game.make2Darray()
 
 // ------------------- Event Listners ---------------------
 $('.startGameButtonStyle').on('click', (e) => {
