@@ -121,6 +121,23 @@ background: #144E75;
 	color: black;
 	text-decoration: underline;
 }
+
+.grid-item-submarine {
+	background-color: yellow;
+}
+
+.grid-item-destroyer {
+	background-color: orange;
+}
+.grid-item-battleship {
+	background-color: purple;
+}
+.grid-item-airCraft {
+	background-color: pink;
+}
+.grid-itme-cruiser {
+	background-color: green;
+}
 /*Styles for hits and misses*/
 
 #hit {

@@ -62,18 +62,16 @@ const player2 = {
 };
 
 const game = {
-	// columns: 10, to be deleted
-	// rows: 10,
 		board: [
 		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,"d",0,0,0,0,'a'],
+		[0,0,0,0,"d",0,0,0,0,'a'],
+		[0,'s',0,0,0,0,0,0,0,'a'],
+		[0,'s',0,0,0,0,0,0,0,'a'],
+		[0,'s',0,0,0,0,0,0,0,'a'],
+		[0,0,0,"c","c","c",0,0,0,0],
 		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,'b','b','b','b',0,0,0],
 		[0,0,0,0,0,0,0,0,0,0]
 	],
 	pickedGridItems: [],
@@ -81,98 +79,57 @@ const game = {
 		typeOfShip: 'Destroyer',
 		length: 2,
 		letter: 'd',
-		gridPlacement: [
-			    [[0,0,0,0],
-			     [0,'d','d',0], 
-			     [0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'d',0],
-  			      [0,'d',0],
-			      [0,0,0]]
-								], 
+		gridPlacement: []
+			    
 	},
 	{
 		typeOfShip: 'Cruiser', 
 		length: 3,
 		letter: 'c',
-		gridPlacement: [
-			    [[0,0,0,0,0],
-			     [0,'c','c','c',0], 
-			     [0,0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'c',0],
-  			      [0,'c',0],
-  			      [0,'c',0],
-			      [0,0,0]]
-							 ], 
+		gridPlacement: [], 
 	},
 	{
 		typeOfShip: 'Submarine',
 		length: 3,
 		letter: 's',
-		gridPlacement: [
-			    [[0,0,0,0,0],
-			     [0,'s','s','s',0], 
-			     [0,0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'s',0],
-  			      [0,'s',0],
-  			      [0,'s',0],
-			      [0,0,0]]
-							 ],	 
+		gridPlacement: [],	 
 	},	
 	{
 		typeOfShip: 'Battleship',
 		length: 4,
 		letter: 'b',
-		gridPlacement: [
-			    [[0,0,0,0,0,0],
-			     [0,'b','b','b','b',0], 
-			     [0,0,0,0,0,0]],
-  
-  			     [[0,0,0],
-  			      [0,'b',0],
-  			      [0,'b',0],
-  			      [0,'b',0],
-  			      [0,'b',0],
-			      [0,0,0]]
-							 ], 
+		gridPlacement: [], 
 	},
 	{
 		typeOfShip:	'Aircraft Carrier',
 		length: 5,
-		gridPlacement: [
-			  [[0,0,0,0,0,0,0],
-			   [0,'a','a','a','a','a',0], 
-			   [0,0,0,0,0,0,0]],
-
-			   [[0,0,0],
-			   	[0,'a',0],
-			   	[0,'a',0],
-			   	[0,'a',0],
-			   	[0,'a',0],
-			   	[0,'a',0],
-			    [0,0,0]]
-							]
+		letter: 'a',
+		gridPlacement: []
 	}],
 	p1RemaingFleet: [],
 	p2RemaingFleet: [],												
-	// //make2darray creates a 10 by 10 array of arrays all containing 0 values		//Hard code a 2d array												
-	// make2Darray(columns, rows){
-	// 	let arr = new Array(this['columns']);
-	// 	arr.fill(0)
-	// 	for (let i = 0; i < arr.length; i++) {
-	// 		arr[i] = new Array(this['rows']);
-	// 		arr[i].fill(0);
-	// 	}
-	// 	return arr;
-	// },
 	// remove alert
 	placeFleet(player){
 		alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
+	},
+	//create a function that will change the html to show ships
+	setShips(){
+		//x= rows ; y= columns
+		for (let y = 0; y < this.board.length; y++) {
+			for (let x = 0; x < this.board.length; x++) {
+				if (this.board[x][y] === 'd') {
+					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-destroyer');
+				} else if (this.board[x][y] === 'c') {
+					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-cruiser');
+				} else if (this.board[x][y] === 's') {
+					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-submarine');
+				} else if (this.board[x][y] === 'b') {
+					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-battleship');
+				} else if (this.board[x][y] === 'a') {
+					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-airCraft');
+				}
+			}
+		}	
 	},
 	//Changes the button text for Start Game to Restart Game
 	changeStartGameText(){
@@ -226,7 +183,10 @@ $('.restartButtonStyle').on('click', (e) => {
 
 $('.player1-battle-grid').on('click', (e) => {
 	console.log(e.target.dataset);
-	console.log(e.target.dataset.square);
+	// console.log(e.target.dataset.square);
+	let target = e.target.dataset.square;
+	console.log(target);
+	
 });
 
 $('.player2-battle-grid').on('click', (e) => {
@@ -237,3 +197,6 @@ $('.player2-battle-grid').on('click', (e) => {
 $('#instructions').on('click', (e) => {
 	game.displayInstructions();
 });
+
+//$('.grid-item[data-square=0-0]')
+//$('.player1-battle-grid .grid-item[data-square=0-0]')
