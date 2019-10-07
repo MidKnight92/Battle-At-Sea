@@ -3,7 +3,7 @@ console.log('Welcome to Battle-At-Sea');
 const player1 = {
 	hits: 0,
 	misses: 0,
-	Fleet: [{
+	fleet: [{
 		typeOfShip: 'Destroyer',
 		length: 2,
 		gridPlacement: [], 
@@ -33,7 +33,7 @@ const player1 = {
 const player2 = {
 	hits: 0,
 	misses: 0,
-	Fleet: [{
+	fleet: [{
 		typeOfShip: 'Destroyer',
 		length: 2,
 		gridPlacement: [], 
@@ -62,14 +62,25 @@ const player2 = {
 };
 
 const game = {
-	columns: 10,
-	rows: 10,
-	vacant: 0,
-	board: [],
+	// columns: 10, to be deleted
+	// rows: 10,
+		board: [
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0]
+	],
 	pickedGridItems: [],
-	Fleet: [{
+	fleet: [{
 		typeOfShip: 'Destroyer',
 		length: 2,
+		letter: 'd',
 		gridPlacement: [
 			    [[0,0,0,0],
 			     [0,'d','d',0], 
@@ -84,6 +95,7 @@ const game = {
 	{
 		typeOfShip: 'Cruiser', 
 		length: 3,
+		letter: 'c',
 		gridPlacement: [
 			    [[0,0,0,0,0],
 			     [0,'c','c','c',0], 
@@ -99,6 +111,7 @@ const game = {
 	{
 		typeOfShip: 'Submarine',
 		length: 3,
+		letter: 's',
 		gridPlacement: [
 			    [[0,0,0,0,0],
 			     [0,'s','s','s',0], 
@@ -114,6 +127,7 @@ const game = {
 	{
 		typeOfShip: 'Battleship',
 		length: 4,
+		letter: 'b',
 		gridPlacement: [
 			    [[0,0,0,0,0,0],
 			     [0,'b','b','b','b',0], 
@@ -132,32 +146,33 @@ const game = {
 		length: 5,
 		gridPlacement: [
 			  [[0,0,0,0,0,0,0],
-			   [0,'c','c','c','c','c',0], 
+			   [0,'a','a','a','a','a',0], 
 			   [0,0,0,0,0,0,0]],
 
 			   [[0,0,0],
-			   	[0,'c',0],
-			   	[0,'c',0],
-			   	[0,'c',0],
-			   	[0,'c',0],
-			   	[0,'c',0],
+			   	[0,'a',0],
+			   	[0,'a',0],
+			   	[0,'a',0],
+			   	[0,'a',0],
+			   	[0,'a',0],
 			    [0,0,0]]
 							]
 	}],
 	p1RemaingFleet: [],
 	p2RemaingFleet: [],												
-	//make2darray creates a 10 by 10 array of arrays all containg 0 values														
-	make2Darray(columns, rows){
-		let arr = new Array(this['columns']);
-		arr.fill(0)
-		for (let i = 0; i < arr.length; i++) {
-			arr[i] = new Array(this['rows']);
-			arr[i].fill(0);
-		}
-		return arr;
-	},
+	// //make2darray creates a 10 by 10 array of arrays all containing 0 values		//Hard code a 2d array												
+	// make2Darray(columns, rows){
+	// 	let arr = new Array(this['columns']);
+	// 	arr.fill(0)
+	// 	for (let i = 0; i < arr.length; i++) {
+	// 		arr[i] = new Array(this['rows']);
+	// 		arr[i].fill(0);
+	// 	}
+	// 	return arr;
+	// },
+	// remove alert
 	placeFleet(player){
-		alert(`${player} place your fleet:\n-The ${this.Fleet[0]['typeOfShip']} has a length of ${this.Fleet[0]['length']}.\n-The ${this.Fleet[1]['typeOfShip']} has a length of ${this.Fleet[1]['length']}.\n-The ${this.Fleet[2]['typeOfShip']} has a length of ${this.Fleet[2]['length']}.\n-The ${this.Fleet[3]['typeOfShip']} has a length of ${this.Fleet[3]['length']}.\n-The ${this.Fleet[4]['typeOfShip']} has a length of ${this.Fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
+		alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
 	},
 	//Changes the button text for Start Game to Restart Game
 	changeStartGameText(){
@@ -190,16 +205,17 @@ const game = {
 		$('#p2HitsStats').text(`Hits: ${player2.hits}`);
 		$('#p2MissesStats').text(`Misses: ${player2.misses}`);
 	},
+	//remove alert
 	displayInstructions(){
 		alert(`The Goal:\n - Sink your opponnet's fleet before the opponnet sinks your fleet.\n\n How To Play:\n - Players will place fleet on their respective battle grid.\n - Once fleets have been placed, each player will take turn firing at their opponnets battle grid by clicking on their opponnet's grid.\n - Players will fire on opponnet's battle grid until they miss.`)
 	}
 }
 
-game.make2Darray()
+// game.make2Darray()
 
 // ------------------- Event Listners --------------------- //
 $('.startGameButtonStyle').on('click', (e) => {
-	game.make2Darray();
+	console.log(game.board);
 	game.changeStartGameText();
 
 });
@@ -210,11 +226,12 @@ $('.restartButtonStyle').on('click', (e) => {
 
 $('.player1-battle-grid').on('click', (e) => {
 	console.log(e.target.dataset);
-	console.log(e.target.dataset.whichSquareMoreWords);
+	console.log(e.target.dataset.square);
 });
 
 $('.player2-battle-grid').on('click', (e) => {
-	
+	console.log(e.target.dataset);
+	console.log(e.target.dataset.square);
 });
 
 $('#instructions').on('click', (e) => {
