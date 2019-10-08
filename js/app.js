@@ -164,9 +164,9 @@ const game = {
  		} else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
  			$(`.grid-item[data-square=${square}]`).addClass('hit');
  			let letter = this.board[x][y].toUpperCase();
- 			$(this.board[x][y]).text(letter)
+ 			this.board[x].splice(y, 1, letter);
  			console.log(letter);
- 		} else if ((this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
+ 		} else if (([x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
  			alert(`Pick a different square.`);
  		}
 	},
@@ -207,6 +207,11 @@ $('.battle-grid').on('click', (e) => {
 $('#instructions').on('click', (e) => {
 	game.displayInstructions();
 });
+
+
+
+// (this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')
+
 
 //$('.grid-item[data-square=0-0]')
 //$('.player1-battle-grid .grid-item[data-square=0-0]')
