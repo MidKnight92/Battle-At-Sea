@@ -114,7 +114,7 @@ const game = {
 	},
 	//create a function that will change the html to show ships
 	setShips(){
-		//x= rows ; y= columns
+		//x= rows; y= columns; This loops through the 2darray and sets the ships
 		for (let y = 0; y < this.board.length; y++) {
 			for (let x = 0; x < this.board.length; x++) {
 				if (this.board[x][y] === 'd') {
@@ -127,9 +127,12 @@ const game = {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-battleship');
 				} else if (this.board[x][y] === 'a') {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-airCraft');
-				}
+				} 
 			}
-		}	
+		} 
+	},
+	checkVertical(){
+		
 	},
 	//Changes the button text for Start Game to Restart Game
 	changeStartGameText(){
@@ -146,13 +149,25 @@ const game = {
 		$('#restartGameButton').removeClass('restartButtonStyle')
 		$('.startBattleButton').removeAttr('#restartGameButton');
 	},
-	hitTarget(player, target){
-		$(target).attr('id','hit');
-		player.hits ++;
+	hitTarget(player){
+		 for (let y = 0; y < this.board.length; y++) {
+		 	for (let x = 0; x < this.board.length; x++) {
+		 		if ((this.board[x][y] === 'a') || (this.board[x][y] === 'd') || (this.board[x][y] === 'b') || (this.board[x][y] === 'c') || (this.board[x][y] === 's')){
+		 			player.hits++;
+		 			$(`.grid-item[data-square=${x}-${y}]`).addClass('hit');
+		 		}
+		 	}
+		 }
 	},
-	missedTarget(player, target){
-		$(player).attr('id','miss');
-		player.misses ++;
+	missedTarget(player){
+		 for (let y = 0; y < this.board.length; y++) {
+		 	for (let x = 0; x < this.board.length; x++) {
+		 		if (this.board[x][y] === 0){
+		 			// player.misses++;
+		 			$(`.grid-item[data-square=${x}-${y}]`).addClass('miss');
+		 		}
+		 	}
+		 }
 	},
 	updateBattleReport(player1, player2){
 		$('#p1FleetRemainingStats').text(`Fleet Remaining: ${this.p1RemaingFleet}`);

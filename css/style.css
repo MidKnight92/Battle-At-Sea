@@ -138,12 +138,14 @@ background: #144E75;
 .grid-itme-cruiser {
 	background-color: green;
 }
+
+
 /*Styles for hits and misses*/
 
-#hit {
+.hit {
 	background-color: rgb(211, 33,45);
 }
 
-#miss {
-	background-color: rgb(245, 245, 245);
+.miss {
+	background-color: green;
 }
