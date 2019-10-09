@@ -9,7 +9,9 @@ class Player {
 
 
 const game = {
-	player: ['Player1', 'Player2'],
+	player: ['Player 1', 'Player 2'],
+	// player1: 'Player 1',
+	// player2: 'Player 2'
 	// whose turn it is
 	board: [
 		[0,0,0,0,0,0,0,0,0,0],
@@ -60,6 +62,15 @@ const game = {
 	// remove alert // notification to display names of ships and lengths and ship placement rules
 	placeFleet(player){
 		alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
+	},
+	switchPlayers(player){
+		if (player === 'P1') {
+			console.log(this.player[1]);
+			return this.player[1]
+		} else if (player === 'P2') {
+			console.log(this.player[0]);
+			return this.player[0]
+		}
 	},
 	placeDestroyer(count){
 		//I want this to to count the number of clicks player 
@@ -153,20 +164,21 @@ const game = {
 		$('#restartGameButton').removeClass('restartButtonStyle')
 		$('.startBattleButton').removeAttr('#restartGameButton');
 	},
-
-	hitOrMiss(square){
+	hitOrMiss(square , player){
 		let string = square.split('');
 		let x = parseInt(string[0])
 		let y = parseInt(string[2])
  		if (this.board[x][y] == 0){
  			console.log('miss');
- 			$(`.grid-item[data-square=${square}]`).addClass('miss');
+ 			$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('miss');
+ 			//console.log(`.grid-item[data-player=${player}][data-square=${square}]`);
+ 			this.switchPlayers();
  		} else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
- 			$(`.grid-item[data-square=${square}]`).addClass('hit');
+ 			$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('hit');
  			let letter = this.board[x][y].toUpperCase();
  			this.board[x].splice(y, 1, letter);
- 			console.log(letter);
- 		} else if (([x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
+ 			this.switchPlayers();
+ 		} else if ((this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
  			alert(`Pick a different square.`);
  		}
 	},
@@ -199,9 +211,10 @@ $('.restartButtonStyle').on('click', (e) => {
 });
 
 $('.battle-grid').on('click', (e) => {
-	// console.log(e.target.dataset);
-	console.log(e.target.dataset.square);
-	game.hitOrMiss(e.target.dataset.square);
+	game.switchPlayers(e.target.dataset.player);
+	//console.log(e.target.dataset.square);
+	game.hitOrMiss(e.target.dataset.square, e.target.dataset.player);
+	//console.log(e.target.dataset.player);
 });
 
 $('#instructions').on('click', (e) => {
