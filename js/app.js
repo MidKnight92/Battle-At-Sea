@@ -5,52 +5,52 @@ class Player {
 		this.hits = hits;
 		this.misses = misses;
 		this.board =  [
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0]
-	];
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0]
+		];
 		this.fleet = [{
-		typeOfShip: 'Destroyer',
-		length: 2,
-		letter: 'd',
-		gridPlacement: [],
-		RemaingFleet: []	    
-	},
-	{
-		typeOfShip: 'Cruiser', 
-		length: 3,
-		letter: 'c',
-		gridPlacement: [],
-		RemaingFleet: [] 
-	},
-	{
-		typeOfShip: 'Submarine',
-		length: 3,
-		letter: 's',
-		gridPlacement: [],
-		RemaingFleet: []	 
-	},	
-	{
-		typeOfShip: 'Battleship',
-		length: 4,
-		letter: 'b',
-		gridPlacement: [], 
-		RemaingFleet: []
-	},
-	{
-		typeOfShip:	'Aircraft Carrier',
-		length: 5,
-		letter: 'a',
-		gridPlacement: [],
-		RemaingFleet: []
-	}]
+			typeOfShip: 'Destroyer',
+			length: 2,
+			letter: 'd',
+			placed: false,
+			RemaingFleet: []	    
+		},
+		{
+			typeOfShip: 'Cruiser', 
+			length: 3,
+			letter: 'c',
+			gridPlacement: [],
+			RemaingFleet: [] 
+		},
+		{
+			typeOfShip: 'Submarine',
+			length: 3,
+			letter: 's',
+			gridPlacement: [],
+			RemaingFleet: []	 
+		},	
+		{
+			typeOfShip: 'Battleship',
+			length: 4,
+			letter: 'b',
+			gridPlacement: [], 
+			RemaingFleet: []
+		},
+		{
+			typeOfShip:	'Aircraft Carrier',
+			length: 5,
+			letter: 'a',
+			gridPlacement: [],
+			RemaingFleet: []
+		}]
 	}
 
 	stillHasShips() {
@@ -118,14 +118,44 @@ const game = {
 		const P1 = new Player ();
 		console.log(P1);
 	},
+	//.     0 is row (x) --- 1 is column (y)
+	// this takes the users click parses it and saves it into the cords array 
+		// grab the values from cords compare them and loop to give it the right letter
 	placeShips(userClicked){ 
-		console.log(userClicked);
-		console.log(this.userPicks);
-		this.userPicks.push(userClicked);
-		// let arr = this.userPicks[0].split('');
-		// let x = parseInt(arr[0])
-		// let y = parseInt(arr[2])
-	},												
+		let cords = this.parseCoordinates(userClicked);
+		this.userPicks.push(cords);
+		console.log(cords);
+		//if the rows are even change y
+		if (this.userPicks.length == 2) {
+
+			// if the second nums x values are the same
+			if (this.userPicks[0][0] === this.userPicks[1][0]) {
+
+				// calc dist between first nums
+				// loop up to that dist
+					// add letter to each square
+
+			}
+			// if first num same, 
+				// calc diff bt second nums
+				// loop up to that dist
+				// add letter to each square
+
+			// cross ship off the list
+
+			// clear out this.userPicks
+
+		}
+
+	},		
+	parseCoordinates(square){
+		const arr1 = square.square.split('');
+		const x = parseInt(arr1[0]);
+		const y = parseInt(arr1[2]);
+		// console.log(` this is x ${x}`);
+		// console.log(`this is y ${y}`);
+		return [x , y]; 
+	},										
 	// remove alert // notification to display names of ships and lengths and ship placement rules
 	// placeFleet(player){
 	// 	alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
@@ -281,7 +311,6 @@ $('.startGameButtonStyle').on('click', (e) => {
 	// game.changeStartGameText();
 	game.startBattle();
 	game.showShips();
-
 });
 
 $('.restartButtonStyle').on('click', (e) => {
@@ -290,6 +319,7 @@ $('.restartButtonStyle').on('click', (e) => {
 
 $('.battle-grid').on('click', (e) => {
 	// or sometimes do ship placement
+	// game.parseCoordinates(e.target.dataset);
 	game.placeShips(e.target.dataset);
 	// console.log(e.target.dataset);
 	// game. -- place ships
