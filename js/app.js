@@ -123,10 +123,13 @@ const game = {
 		const P1 = new Player ();
 		this.p1 = P1
 	},
+	// later--post mvp--error check the pairs to make sure they're in a v or h line and close enough together
 	//.     0 is row (x) --- 1 is column (y)
 	// this takes the users click parses it and saves it into the cords array 
-		// grab the values from cords compare them and loop to give it the right letter
+	// grab the values from cords compare them and loop to give it the right letter
+	// later--post mvp--error check the pairs to make sure they're in a v or h line and close enough together
 	placeShips(userClicked){ 
+		
 		// grabs value sends it to be parsed then saves to userPicks array
 		let cords = this.parseCoordinates(userClicked);
 		this.userPicks.push(cords);
@@ -145,81 +148,29 @@ const game = {
 				// if (this.fleet[0]['length'] === diff_y) {
 					// loop up to that dist
 
-					for (let i = 0; i <= diff_y; i++) {
-						console.log(this.fleet[this.placingShip]['letter']);
+				for (let i = 0; i <= diff_y; i++) {
+					console.log(this.fleet[this.placingShip]['letter']);
 
-						// should figure out which ship to place
+					// should figure out which ship to place
 
-						// this.p1.board[this.userPicks[0][0]][this.userPicks[0][1]] = this.fleet[this.placingShip]['letter'];
-					}  
-				//check if the diff in cols matches the length of cruiser
-				// } else if (this.fleet[1]['length'] === diff_y) {
-				// 	// loop up to that dist
-				// 	for (let i = 0; i < diff_y; i++) {
-				// 		console.log('cruiser');
-				// 	}
-				// // check if the diff in cols matches the length of submarine
-				// } else if (this.fleet[2]['length'] === diff_y) {
-				// 	// loop up to that dist
-				// 	for (let i = 0; i < diff_y; i++) {	
-				// 		console.log('Submarine');
-				// 	}
-				// // check if the diff in cols matches the length of battleship	
-				// } else if (this.fleet[3]['length'] === diff_y) {
-				// 	// loop up to that dist
-				// 	for (let i = 0; i < diff_y; i++) {	
-				// 		console.log('battleship');
-				// 	}
-				// // check if the diff in cols matches the length of aircraft
-				// } else if (this.fleet[4]['length'] === diff_y) {
-				// 	// loop up to that dist
-				// 	for (let i = 0; i < diff_y; i++) {	
-				// 		console.log('Aircraft');
-				// 	}
-				// }
-				// calc dist between first nums
-				// loop up to that dist
-					// add letter to each square [changing second num][first num]
-				// else if second num same, 
-			} else if (this.userPicks[0][1] === this.userPicks[1][1]){
-				//this makes the difference an absolute value
-				let diff_x = Math.abs(this.userPicks[1][0] - this.userPicks[0][0])
-				// check if the diff in rows matches the length of destroyer
-				if (this.fleet[0]['length'] === diff_x) {
-					for (let i = 0; i < diff_x; i++) {
-						console.log('destroyer');
-					}  
-				// check if the diff in rows matches the length of cruiser
-				} else if (this.fleet[1]['length'] === diff_x) {
-					for (let i = 0; i < diff_x; i++) {
-						console.log('cruiser');
-					}
-				// check if the diff in rows matches the length of submarine
-				} else if (this.fleet[2]['length'] === diff_x) {
-					for (let i = 0; i < diff_x; i++) {	
-						console.log('Submarine');
-					}
-				// check if the diff in rows matches the length of battleship	
-				} else if (this.fleet[3]['length'] === diff_x) {
-					for (let i = 0; i < diff_x; i++) {	
-						console.log('battleship');
-					}
-				// check if the diff in rows matches the length of aircraft
-				} else if (this.fleet[4]['length'] === diff_x) {
-					for (let i = 0; i < diff_x; i++) {	
-						console.log('Aircraft');
-					}
-				}
+					// this.p1.board[this.userPicks[0][0]][this.userPicks[0][1]] = this.fleet[this.placingShip]['letter'];
+				}  
+					
+
 			}
-			// later--post mvp--error check the pairs to make sure they're in a v or h line and close enough together
 
-
-			// cross ship off the list
 
 			// clear out this.userPicks
 			this.userPicks = [];
-		}
 
+			// cross ship off the list
+			this.placingShip++;
+
+			// if 5 -- reset to 0
+				// 'done'
+				// later: change player
+
+		}
 	},		
 	parseCoordinates(square){
 		const arr1 = square.square.split('');
