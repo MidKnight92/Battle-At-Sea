@@ -68,6 +68,8 @@ const game = {
 	userPicks: [],
 	p1: null,
 	p2: null,
+	activePlayer: null,
+	isBattling: false,
 	placingShip: 0,
 	board: [
 		[0,0,0,0,0,0,0,0,0,0],
@@ -121,7 +123,11 @@ const game = {
 	],
 	startBattle(){
 		const P1 = new Player ();
+		const P2 = new Player ();
 		this.p1 = P1
+		this.p2 = P2
+		this.whoseTurn = "P1"
+		this.activePlayer = this.p1
 	},
 	// later--post mvp--error check the pairs to make sure they're in a v or h line and close enough together
 	//.     0 is row (x) --- 1 is column (y)
@@ -154,7 +160,8 @@ const game = {
 					//horizontal placement below
 					for (let i = this.userPicks[0][1]; i <= this.userPicks[1][1]; i++) {
 						const col = this.userPicks[0][0]
-						this.p1.board[col][i] = this.fleet[this.placingShip]['letter'];
+						this.activePlayer.board[col][i] = this.fleet[this.placingShip]['letter'];
+						
 					} 
 				} 
 			} else if (this.userPicks[0][1] === this.userPicks[1][1]) {
@@ -165,27 +172,30 @@ const game = {
 					// vertical placement below
 					for (let i = this.userPicks[0][0]; i <= this.userPicks[1][0]; i++) {
 						const row = this.userPicks[0][1] // board[col][row]
-						this.p1.board[i][row] = this.fleet[this.placingShip]['letter'];
+						this.activePlayer.board[i][row] = this.fleet[this.placingShip]['letter'];
+						
 					}
 				}
 			}
 				// if 5 -- reset to 0
 				// 'done'
 				// later: change player
-			if (this.placingShip === 5) {
+			if (this.placingShip === 4) {
+				console.log("that was the last ship");
+				if (this.activePlayer === this.p2 && !this.battle) {
+					this.battle = true;
+				}
 				this.placingShip = 0;
 				this.switchPlayers()
 			} else {
-				// clear out this.userPicks
-			this.userPicks = [];
-
 				// cross ship off the list
-			this.placingShip++;
+				this.placingShip++;
 			}	
-			
-
+			// clear out this.userPicks
+			this.userPicks = [];
 		}
-	},		
+	},
+
 	parseCoordinates(square){
 		const arr1 = square.square.split('');
 		const x = parseInt(arr1[0]);
@@ -199,10 +209,10 @@ const game = {
 	// 	alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
 	// },
 	switchPlayers() {
-		if (this.whoseTurn === 'P1') {
-			this.whoseTurn = 'P2'
-		} else if (this.whoseTurn === 'P2') {
-			this.whoseTurn = 'P1'
+		if (this.activePlayer === this.p1) {
+			this.activePlayer = this.p2;
+		} else {
+			this.activePlayer = this.p1;
 		}
 	},
 	// placeDestroyer(count){
@@ -298,33 +308,35 @@ const game = {
 	// 	$('.startBattleButton').removeAttr('#restartGameButton');
 	// },
 	hitOrMiss(clickInfo){ 
+		console.log('all ships set');
 		console.log(clickInfo);
 		console.log(clickInfo.player);
 		let arr = clickInfo.square.split('');
 		let x = parseInt(arr[0])
 		let y = parseInt(arr[2])
+		if (this.isBattling === true) {
  		// if (it's p1's turn and they clicked on p2's board) or (if it's p2's turn and they clicked on p1's board)
- 		if ((this.whoseTurn === "P1" && clickInfo.player === 'p2') || (this.whoseTurn === "P2" &&  clickInfo.player === 'p1')) {
- 			// check stuff
+	 		if ((this.whoseTurn === "P1" && clickInfo.player === 'p2') || (this.whoseTurn === "P2" &&  clickInfo.player === 'p1')) {
+	 			//check stuff
 
- 			// if (this.board[x][y] == 0){
-	 		// 	console.log('miss');
-	 		// 	$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('miss');
-	 			//console.log(`.grid-item[data-player=${player}][data-square=${square}]`);
-	 			// this.switchPlayers();
- 			// } else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
-	 		// 	$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('hit');
-	 		// 	let letter = this.board[x][y].toUpperCase();
-	 			// this.board[x].splice(y, 1, letter);
-	 		// 	this.switchPlayers();
-	 		// } else if ((this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
-	 		// 	alert(`Pick a different square.`);
-	 		// }
- 		} else {
- 			alert(`not your turn`);
+	 			if (this.board[x][y] == 0){
+		 			console.log('miss');
+		 			$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('miss');
+		 			console.log(`.grid-item[data-player=${player}][data-square=${square}]`);
+		 			//this.switchPlayers();
+	 			} else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
+		 			$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('hit');
+		 			let letter = this.board[x][y].toUpperCase();
+		 			this.board[x].splice(y, 1, letter);
+		 			//this.switchPlayers();
+		 		} else if ((this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
+		 			alert(`Pick a different square.`);
+		 		}
+	 		} else {
+	 			alert(`not your turn`);
 
- 		}
-
+	 		}
+	 	}
 	},
 			
 
@@ -360,8 +372,7 @@ $('.battle-grid').on('click', (e) => {
 	// game.parseCoordinates(e.target.dataset);
 	game.placeShips(e.target.dataset);
 	// console.log(e.target.dataset);
-	// game. -- place ships
-	// game.hitOrMiss(e.target.dataset);
+	//game.hitOrMiss(e.target.dataset);
 });
 
 $('#instructions').on('click', (e) => {
