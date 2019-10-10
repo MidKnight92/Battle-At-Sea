@@ -27,6 +27,73 @@ class Player {
 			typeOfShip: 'Cruiser', 
 			length: 3,
 			letter: 'c',
+			placed: false,
+			RemaingFleet: [] 
+		},
+		{
+			typeOfShip: 'Submarine',
+			length: 3,
+			letter: 's',
+			placed: false,
+			RemaingFleet: []	 
+		},	
+		{
+			typeOfShip: 'Battleship',
+			length: 4,
+			letter: 'b',
+			placed: false,
+			RemaingFleet: []
+		},
+		{
+			typeOfShip:	'Aircraft Carrier',
+			length: 5,
+			letter: 'a',
+			placed: false,
+			RemaingFleet: []
+		}]
+	}
+
+	stillHasShips() {
+
+	}
+
+	placeShip() {
+
+	}
+}
+
+
+const game = {
+	whoseTurn: "P1", // can only be "P1" or "P2"
+	userPicks: [],
+	p1: null,
+	p2: null,
+	placingShip: 0,
+	board: [
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0]
+	],
+	pickedGridItems: [],
+	fleet: [
+		{
+			typeOfShip: 'Destroyer',
+			length: 2,
+			letter: 'd',
+			gridPlacement: [],
+			RemaingFleet: []	    
+		},
+		{
+			typeOfShip: 'Cruiser', 
+			length: 3,
+			letter: 'c',
 			gridPlacement: [],
 			RemaingFleet: [] 
 		},
@@ -50,120 +117,66 @@ class Player {
 			letter: 'a',
 			gridPlacement: [],
 			RemaingFleet: []
-		}]
-	}
-
-	stillHasShips() {
-
-	}
-
-	placeShip() {
-
-	}
-}
-
-
-const game = {
-	whoseTurn: "P1", // can only be "P1" or "P2"
-	userPicks: [],
-	board: [
-		[0,0,0,0,0,0,'d',0,0,0],
-		[0,0,0,0,0,0,'d',0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,'c','c','c',0,0],
-		[0,'s',0,0,0,0,0,0,0,0],
-		[0,'s',0,0,0,0,0,0,0,0],
-		[0,'s',0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0]
+		}
 	],
-	pickedGridItems: [],
-	fleet: [{
-		typeOfShip: 'Destroyer',
-		length: 2,
-		letter: 'd',
-		gridPlacement: [],
-		RemaingFleet: []	    
-	},
-	{
-		typeOfShip: 'Cruiser', 
-		length: 3,
-		letter: 'c',
-		gridPlacement: [],
-		RemaingFleet: [] 
-	},
-	{
-		typeOfShip: 'Submarine',
-		length: 3,
-		letter: 's',
-		gridPlacement: [],
-		RemaingFleet: []	 
-	},	
-	{
-		typeOfShip: 'Battleship',
-		length: 4,
-		letter: 'b',
-		gridPlacement: [], 
-		RemaingFleet: []
-	},
-	{
-		typeOfShip:	'Aircraft Carrier',
-		length: 5,
-		letter: 'a',
-		gridPlacement: [],
-		RemaingFleet: []
-	}],
 	startBattle(){
 		const P1 = new Player ();
-		console.log(P1);
+		this.p1 = P1
 	},
 	//.     0 is row (x) --- 1 is column (y)
 	// this takes the users click parses it and saves it into the cords array 
 		// grab the values from cords compare them and loop to give it the right letter
 	placeShips(userClicked){ 
+		// grabs value sends it to be parsed then saves to userPicks array
 		let cords = this.parseCoordinates(userClicked);
 		this.userPicks.push(cords);
 		console.log(cords);
-		
+
 		if (this.userPicks.length == 2) {
 
-			//if the rows are even change y
-			if (this.userPicks[0][0] === this.userPicks[1][0]) {
+			//if the cols are even change y
+			if (this.userPicks[0][0] === this.userPicks[1][0]) { console.log("horiz");
 				//this makes the difference an absolute value
+				console.log(this.userPicks);
 				let diff_y = Math.abs(this.userPicks[1][1] - this.userPicks[0][1])
-				// check if the diff in cols matches the length of destroyer
-				if (this.fleet[0]['length'] === diff_y) {
-					// loop up to that dist
-					for (let i = 0; i < diff_y; i++) {
-					console.log('destroyer');
-					}  
-				// check if the diff in cols matches the length of cruiser
-				} else if (this.fleet[1]['length'] === diff_y) {
-					// loop up to that dist
-					for (let i = 0; i < diff_y; i++) {
-						console.log('cruiser');
-					}
-				// check if the diff in cols matches the length of submarine
-				} else if (this.fleet[2]['length'] === diff_y) {
-					// loop up to that dist
-					for (let i = 0; i < diff_y; i++) {	
-						console.log('Submarine');
-					}
-				// check if the diff in cols matches the length of battleship	
-				} else if (this.fleet[3]['length'] === diff_y) {
-					// loop up to that dist
-					for (let i = 0; i < diff_y; i++) {	
-						console.log('battleship');
-					}
-				// check if the diff in cols matches the length of aircraft
-				} else if (this.fleet[4]['length'] === diff_y) {
-					// loop up to that dist
-					for (let i = 0; i < diff_y; i++) {	
-						console.log('Aircraft');
-					}
-				}
+				console.log(diff_y);
 
+				// check if the diff in cols matches the length of destroyer
+				// if (this.fleet[0]['length'] === diff_y) {
+					// loop up to that dist
+
+					for (let i = 0; i <= diff_y; i++) {
+						console.log(this.fleet[this.placingShip]['letter']);
+
+						// should figure out which ship to place
+
+						// this.p1.board[this.userPicks[0][0]][this.userPicks[0][1]] = this.fleet[this.placingShip]['letter'];
+					}  
+				//check if the diff in cols matches the length of cruiser
+				// } else if (this.fleet[1]['length'] === diff_y) {
+				// 	// loop up to that dist
+				// 	for (let i = 0; i < diff_y; i++) {
+				// 		console.log('cruiser');
+				// 	}
+				// // check if the diff in cols matches the length of submarine
+				// } else if (this.fleet[2]['length'] === diff_y) {
+				// 	// loop up to that dist
+				// 	for (let i = 0; i < diff_y; i++) {	
+				// 		console.log('Submarine');
+				// 	}
+				// // check if the diff in cols matches the length of battleship	
+				// } else if (this.fleet[3]['length'] === diff_y) {
+				// 	// loop up to that dist
+				// 	for (let i = 0; i < diff_y; i++) {	
+				// 		console.log('battleship');
+				// 	}
+				// // check if the diff in cols matches the length of aircraft
+				// } else if (this.fleet[4]['length'] === diff_y) {
+				// 	// loop up to that dist
+				// 	for (let i = 0; i < diff_y; i++) {	
+				// 		console.log('Aircraft');
+				// 	}
+				// }
 				// calc dist between first nums
 				// loop up to that dist
 					// add letter to each square [changing second num][first num]
@@ -197,25 +210,14 @@ const game = {
 						console.log('Aircraft');
 					}
 				}
-
-
-
-				// calc diff bt first nums
-				// loop up to that dist
-				// add letter to each square
 			}
-				
-
-				// for (let i = 0; i < diff_x; i++) {
-					
-				// }
 			// later--post mvp--error check the pairs to make sure they're in a v or h line and close enough together
 
 
 			// cross ship off the list
 
 			// clear out this.userPicks
-
+			this.userPicks = [];
 		}
 
 	},		
@@ -348,7 +350,7 @@ const game = {
  			// } else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
 	 		// 	$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('hit');
 	 		// 	let letter = this.board[x][y].toUpperCase();
-	 		// 	this.board[x].splice(y, 1, letter);
+	 			// this.board[x].splice(y, 1, letter);
 	 		// 	this.switchPlayers();
 	 		// } else if ((this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
 	 		// 	alert(`Pick a different square.`);
@@ -375,12 +377,12 @@ const game = {
 	}
 }
 
+	game.startBattle();
 
 // ------------------- Event Listners --------------------- //
 $('.startGameButtonStyle').on('click', (e) => {
 	// console.log(game.board);
 	// game.changeStartGameText();
-	game.startBattle();
 	game.showShips();
 });
 
