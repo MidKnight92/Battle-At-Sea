@@ -151,29 +151,38 @@ const game = {
 				for (let i = 0; i <= diff_y; i++) {
 					this.fleet[this.placingShip];
 					// should figure out which ship to place
+					//horizontal placement below
 					for (let i = this.userPicks[0][1]; i <= this.userPicks[1][1]; i++) {
-						this.p1.board[this.userPicks[0][0]][i] = this.fleet[this.placingShip]['letter'];
+						const col = this.userPicks[0][0]
+						this.p1.board[col][i] = this.fleet[this.placingShip]['letter'];
+					} 
+				} 
+			} else if (this.userPicks[0][1] === this.userPicks[1][1]) {
+				let diff = Math.abs(this.userPicks[1][1] - this.userPicks[0][1])
+				for (let i = 0; i <= diff; i++) {
+					console.log('vertical');
+					this.fleet[this.placingShip];
+					// vertical placement below
+					for (let i = this.userPicks[0][0]; i <= this.userPicks[1][0]; i++) {
+						const row = this.userPicks[0][1] // board[col][row]
+						this.p1.board[i][row] = this.fleet[this.placingShip]['letter'];
 					}
-	
-				}  // vertical goes below
-				
-
-
+				}
 			}
-
-			// clear out this.userPicks
-			this.userPicks = [];
-
-			// cross ship off the list
-			this.placingShip++;
-
+				// if 5 -- reset to 0
+				// 'done'
+				// later: change player
 			if (this.placingShip === 5) {
 				this.placingShip = 0;
 				this.switchPlayers()
-			}
-			// if 5 -- reset to 0
-				// 'done'
-				// later: change player
+			} else {
+				// clear out this.userPicks
+			this.userPicks = [];
+
+				// cross ship off the list
+			this.placingShip++;
+			}	
+			
 
 		}
 	},		
