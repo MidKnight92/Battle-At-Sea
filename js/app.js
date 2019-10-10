@@ -149,16 +149,17 @@ const game = {
 					// loop up to that dist
 
 				for (let i = 0; i <= diff_y; i++) {
-					console.log(this.fleet[this.placingShip]['letter']);
-
+					this.fleet[this.placingShip];
 					// should figure out which ship to place
+					for (let i = this.userPicks[0][1]; i <= this.userPicks[1][1]; i++) {
+						this.p1.board[this.userPicks[0][0]][i] = this.fleet[this.placingShip]['letter'];
+					}
+	
+				}  // vertical goes below
+				
 
-					// this.p1.board[this.userPicks[0][0]][this.userPicks[0][1]] = this.fleet[this.placingShip]['letter'];
-				}  
-					
 
 			}
-
 
 			// clear out this.userPicks
 			this.userPicks = [];
@@ -166,6 +167,10 @@ const game = {
 			// cross ship off the list
 			this.placingShip++;
 
+			if (this.placingShip === 5) {
+				this.placingShip = 0;
+				this.switchPlayers()
+			}
 			// if 5 -- reset to 0
 				// 'done'
 				// later: change player
@@ -297,7 +302,7 @@ const game = {
 	 		// 	console.log('miss');
 	 		// 	$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('miss');
 	 			//console.log(`.grid-item[data-player=${player}][data-square=${square}]`);
-	 			this.switchPlayers();
+	 			// this.switchPlayers();
  			// } else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
 	 		// 	$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('hit');
 	 		// 	let letter = this.board[x][y].toUpperCase();
