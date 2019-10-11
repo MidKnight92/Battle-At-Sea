@@ -64,13 +64,16 @@ class Player {
 
 
 const game = {
-	whoseTurn: "P1", // can only be "P1" or "P2"
 	userPicks: [],
+	hitMiss: [],
 	p1: null,
 	p2: null,
+	whoseTurn: 'P1',
 	activePlayer: null,
 	isBattling: false,
+	isShipsShowing: false,
 	placingShip: 0,
+	winner:false,
 	board: [
 		[0,0,0,0,0,0,0,0,0,0],
 		[0,0,0,0,0,0,0,0,0,0],
@@ -94,28 +97,28 @@ const game = {
 		},
 		{
 			typeOfShip: 'Cruiser', 
-			length: 3,
+			length: 2,
 			letter: 'c',
 			gridPlacement: [],
 			RemaingFleet: [] 
 		},
 		{
 			typeOfShip: 'Submarine',
-			length: 3,
+			length: 2,
 			letter: 's',
 			gridPlacement: [],
 			RemaingFleet: []	 
 		},	
 		{
 			typeOfShip: 'Battleship',
-			length: 4,
+			length: 2,
 			letter: 'b',
 			gridPlacement: [], 
 			RemaingFleet: []
 		},
 		{
 			typeOfShip:	'Aircraft Carrier',
-			length: 5,
+			length: 2,
 			letter: 'a',
 			gridPlacement: [],
 			RemaingFleet: []
@@ -124,10 +127,10 @@ const game = {
 	startBattle(){
 		const P1 = new Player ();
 		const P2 = new Player ();
-		this.p1 = P1
-		this.p2 = P2
+		this.p1 = P1;
+		this.p2 = P2;
 		this.whoseTurn = "P1"
-		this.activePlayer = this.p1
+		this.activePlayer = this.p1;
 	},
 	// later--post mvp--error check the pairs to make sure they're in a v or h line and close enough together
 	//.     0 is row (x) --- 1 is column (y)
@@ -141,7 +144,8 @@ const game = {
 		this.userPicks.push(cords);
 		console.log(cords);
 
-		if (this.userPicks.length == 2) {
+		if (this.userPicks.length === 2) {
+			console.log("userPicks is now equal to 2");
 
 			//if the cols are even change y
 			if (this.userPicks[0][0] === this.userPicks[1][0]) { console.log("horiz");
@@ -182,8 +186,9 @@ const game = {
 				// later: change player
 			if (this.placingShip === 4) {
 				console.log("that was the last ship");
-				if (this.activePlayer === this.p2 && !this.battle) {
-					this.battle = true;
+				if (this.activePlayer === this.p2 && !this.isBattling) {
+					console.log("that was p2's last ship, now battling");
+					this.isBattling = true;
 				}
 				this.placingShip = 0;
 				this.switchPlayers()
@@ -209,10 +214,13 @@ const game = {
 	// 	alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
 	// },
 	switchPlayers() {
+		console.log("switching players");
 		if (this.activePlayer === this.p1) {
+			console.log('you switched to p2');
 			this.activePlayer = this.p2;
 		} else {
 			this.activePlayer = this.p1;
+			console.log('you switched to p1');
 		}
 	},
 	// placeDestroyer(count){
@@ -232,17 +240,21 @@ const game = {
 	//create a function that will change the html to show ships
 	showShips(){
 		//x= rows; y= columns; This loops through the 2darray and sets the ships
-		for (let y = 0; y < this.board.length; y++) {
-			for (let x = 0; x < this.board.length; x++) {
-				if (this.board[x][y] === 'd') {
+		if (this.isShowing === true) {
+
+
+		}
+		for (let y = 0; y < this.activePlayer.board.length; y++) {
+			for (let x = 0; x < this.activePlayer.board.length; x++) {
+				if (this.activePlayer.board[x][y] === 'd') {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-destroyer');
-				} else if (this.board[x][y] === 'c') {
+				} else if (this.activePlayer.board[x][y] === 'c') {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-cruiser');
-				} else if (this.board[x][y] === 's') {
+				} else if (this.activePlayer.board[x][y] === 's') {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-submarine');
-				} else if (this.board[x][y] === 'b') {
+				} else if (this.activePlayer.board[x][y] === 'b') {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-battleship');
-				} else if (this.board[x][y] === 'a') {
+				} else if (this.activePlayer.board[x][y] === 'a') {
 					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-airCraft');
 				} 
 			}
@@ -299,47 +311,48 @@ const game = {
 	// 	$('#restartBattle').removeClass('startGameButtonStyle');
 	// 	$('#restartBattle').addClass('restartButtonStyle');
 	// },
-	// //Changes the button text for Start Game to Restart Game --- W.I.P.
-	// changeRestartGameText(){
-	// 	$('.restartButtonStyle').text('Start Game');
-	// 	$('.restartButtonStyle').attr('id', 'startBattle');
-	// 	$('#restartGameButton').addClass('class','startBattleButton');
-	// 	$('#restartGameButton').removeClass('restartButtonStyle')
-	// 	$('.startBattleButton').removeAttr('#restartGameButton');
-	// },
 	hitOrMiss(clickInfo){ 
-		console.log('all ships set');
-		console.log(clickInfo);
-		console.log(clickInfo.player);
-		let arr = clickInfo.square.split('');
-		let x = parseInt(arr[0])
-		let y = parseInt(arr[2])
+		// let cords = this.parseCoordinates(clickInfo);
+		// this.hitMiss.push(cords);
+		console.log("about to check hit or miss");
+		const arr1 = clickInfo.square.split('');
+		const x = parseInt(arr1[0]);
+		const y = parseInt(arr1[2]);
+		console.log('set for battle');
+
 		if (this.isBattling === true) {
  		// if (it's p1's turn and they clicked on p2's board) or (if it's p2's turn and they clicked on p1's board)
-	 		if ((this.whoseTurn === "P1" && clickInfo.player === 'p2') || (this.whoseTurn === "P2" &&  clickInfo.player === 'p1')) {
+ 			console.log("this is clickInfo.player");
+ 			console.log(clickInfo.player);
+	 		if ((this.activePlayer === this.p1 && clickInfo.player === 'p2') || (this.activePlayer === this.p2 &&  clickInfo.player === 'p1')) {
 	 			//check stuff
-
-	 			if (this.board[x][y] == 0){
+	 			if (this.activePlayer.board[x][y] == 0){
 		 			console.log('miss');
-		 			$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('miss');
-		 			console.log(`.grid-item[data-player=${player}][data-square=${square}]`);
-		 			//this.switchPlayers();
-	 			} else if ((this.board[x][y] === 'd') || (this.board[x][y] === 'c') || (this.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
-		 			$(`.grid-item[data-player=${player}][data-square=${square}]`).addClass('hit');
-		 			let letter = this.board[x][y].toUpperCase();
-		 			this.board[x].splice(y, 1, letter);
-		 			//this.switchPlayers();
-		 		} else if ((this.board[x][y] === 'D') || (this.board[x][y] === 'C') || (this.board[x][y] === 'S') || (this.board[x][y] === 'B') || (this.board[x][y] === 'A')) {
+		 			$(`.grid-item[data-player=${clickInfo.player}][data-square=${clickInfo.square}]`).addClass('miss');
+		 			console.log(`.grid-item[data-player=${clickInfo.player}][data-square=${clickInfo.square}]`);
+		 			this.switchPlayers();
+	 			} else if ((this.activePlayer.board[x][y] === 'd') || (this.activePlayer.board[x][y] === 'c') || (this.activePlayer.board[x][y] === 's') || (this.board[x][y] === 'b') || (this.board[x][y] === 'a')) {
+		 			$(`.grid-item[data-player=${clickInfo.player}][data-square=${clickInfo.square}]`).addClass('hit');
+		 			let letter = this.activePlayer.board[x][y].toUpperCase();
+		 			this.activePlayer.board[x].splice(y, 1, letter);
+		 			this.switchPlayers();
+		 		} else if ((this.activePlayer.board[x][y] === 'D') || (this.activePlayer.board[x][y] === 'C') || (this.activePlayer.board[x][y] === 'S') || (this.activePlayer.board[x][y] === 'B') || (this.activePlayer.board[x][y] === 'A')) {
 		 			alert(`Pick a different square.`);
 		 		}
 	 		} else {
 	 			alert(`not your turn`);
 
 	 		}
-	 	}
+	 		console.log("about to Check Winners");
+	 	}  
 	},
-			
-
+	setOrBattle(eventL){
+		if (this.isBattling !== true) {
+			this.placeShips(eventL);
+		} else {
+			this.hitOrMiss(eventL);
+		}
+	},
 	updateBattleReport(player1, player2){
 		$('#p1FleetRemainingStats').text(`Fleet Remaining: ${this.p1RemaingFleet}`);
 		$('#p1HitsStats').text(`Hits: ${player1.hits}`);
@@ -348,9 +361,33 @@ const game = {
 		$('#p2HitsStats').text(`Hits: ${player2.hits}`);
 		$('#p2MissesStats').text(`Misses: ${player2.misses}`);
 	},
+	checkWinners(){
+		console.log("checking winners");
+		let activePlayerWon = true;
+		for (let y = 0; y < this.activePlayer.board.length; y++) {
+			for (let x = 0; x < this.activePlayer.board.length; x++) {
+				const singleElement = this.activePlayer.board[y][x]
+				if (typeof singleElement === "string" && singleElement.toUpperCase() && !== singleElement) {
+					activePlayerWon = false;
+				}
+			}
+		} 
+		if(!activePlayerWon) {
+			console.log("about to switch players");
+			this.switchPlayers()
+		} else {
+			console.log('you won');
+			$('.battle-grid').off('click', (e) => {
+			// or sometimes do ship placement
+			// game.parseCoordinates(e.target.dataset);
+			game.setOrBattle(e.target.dataset);
+			console.log(e.target.dataset);
+		});
+		}
+	},
 	//remove alert
 	displayInstructions(){
-		alert(`The Goal:\n - Sink your opponnet's fleet before the opponnet sinks your fleet.\n\n How To Play:\n - Players will place fleet on their respective battle grid.\n - Once fleets have been placed, each player will take turn firing at their opponnets battle grid by clicking on their opponnet's grid.\n - Players will fire on opponnet's battle grid until they miss.`)
+		alert(`The Goal:\n - Sink your opponnet's fleet before the opponnet sinks your fleet.\n\n How To Play:\n - Players will place fleet to the length of the fleet on their respective battle grid.\n - Once fleets have been placed, each player will take turn firing at their opponnets battle grid by clicking on their opponnet's grid.\n - Players will fire on opponnet's battle grid until they miss.`)
 	}
 }
 
@@ -370,9 +407,8 @@ $('.restartButtonStyle').on('click', (e) => {
 $('.battle-grid').on('click', (e) => {
 	// or sometimes do ship placement
 	// game.parseCoordinates(e.target.dataset);
-	game.placeShips(e.target.dataset);
+	game.setOrBattle(e.target.dataset);
 	// console.log(e.target.dataset);
-	//game.hitOrMiss(e.target.dataset);
 });
 
 $('#instructions').on('click', (e) => {
