@@ -144,21 +144,15 @@ const game = {
 		// grabs value sends it to be parsed then saves to userPicks array
 		let cords = this.parseCoordinates(userClicked);
 		this.userPicks.push(cords);
-		console.log(cords);
+		
 
 		if (this.userPicks.length === 2) {
-			console.log("userPicks is now equal to 2");
 
 			//if the cols are even change y
 			if (this.userPicks[0][0] === this.userPicks[1][0]) { console.log("horiz");
 				//this makes the difference an absolute value
-				console.log(this.userPicks);
-				let diff_y = Math.abs(this.userPicks[1][1] - this.userPicks[0][1])
-				console.log(diff_y);
+				let diff_y = Math.abs(this.userPicks[1][1] - this.userPicks[0][1]);
 
-				// check if the diff in cols matches the length of destroyer
-				// if (this.fleet[0]['length'] === diff_y) {
-					// loop up to that dist
 
 				for (let i = 0; i <= diff_y; i++) {
 					this.fleet[this.placingShip];
@@ -348,11 +342,6 @@ const game = {
 		$('#p2HitsStats').text(`Hits: ${player2.hits}`);
 		$('#p2MissesStats').text(`Misses: ${player2.misses}`);
 	},
-	//assumes that a player has won
-	// looks through the inactive players board looks through the every element checks if it is a string that is uppercase and not just a single element and there aren't any lowercase elements
-		//if there is a lowercase element changes the activePlayerWon to false
-			//if the active player is false switches player battle continues
-			//else activePlayer is true and we have a winner 
 	checkWinners(){
 		console.log("checking winners");
 		let activePlayerWon = true;
