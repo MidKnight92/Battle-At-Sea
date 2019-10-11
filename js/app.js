@@ -98,28 +98,28 @@ const game = {
 		},
 		{
 			typeOfShip: 'Cruiser', 
-			length: 3,
+			length: 2,
 			letter: 'c',
 			gridPlacement: [],
 			RemaingFleet: [] 
 		},
 		{
 			typeOfShip: 'Submarine',
-			length: 3,
+			length: 2,
 			letter: 's',
 			gridPlacement: [],
 			RemaingFleet: []	 
 		},	
 		{
 			typeOfShip: 'Battleship',
-			length: 4,
+			length: 2,
 			letter: 'b',
 			gridPlacement: [], 
 			RemaingFleet: []
 		},
 		{
 			typeOfShip:	'Aircraft Carrier',
-			length: 5,
+			length: 2,
 			letter: 'a',
 			gridPlacement: [],
 			RemaingFleet: []
@@ -207,8 +207,6 @@ const game = {
 		const arr1 = square.square.split('');
 		const x = parseInt(arr1[0]);
 		const y = parseInt(arr1[2]);
-		// console.log(` this is x ${x}`);
-		// console.log(`this is y ${y}`);
 		return [x , y]; 
 	},										
 	// remove alert // notification to display names of ships and lengths and ship placement rules
@@ -227,42 +225,27 @@ const game = {
 			console.log('you switched to p1');
 		}
 	},
-	// placeDestroyer(count){
-	// 	//I want this to to count the number of clicks player 
-	// 		//TrackEvent
-	// 	for (let y = 0; y < '.grid-item'.length; y++) {
-	// 		for (let x = 0; x < '.grid-item'.length; x++){
-	// 			if (`.grid-item[dataset-square=${x}-${y}` || (this.board[x - 1][y] === 'd')) {
-	// 				console.log('vertical d');
-	// 			} else if ((this.board[x][y + 1] === 'd') || (this.board[x][y -1] === 'd')){
-	// 				console.log('horizontal d');
-	// 			}
-	// 		}	
-	// 	}
-		
-	// },
 	//create a function that will change the html to show ships
 	showShips(){
 		//x= rows; y= columns; This loops through the 2darray and sets the ships
 		if (this.isShowing === true) {
-
-
+			for (let y = 0; y < this.activePlayer.board.length; y++) {
+				for (let x = 0; x < this.activePlayer.board.length; x++) {
+					if (this.activePlayer.board[x][y] === 'd') {
+						$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-destroyer');
+					} else if (this.activePlayer.board[x][y] === 'c') {
+						$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-cruiser');
+					} else if (this.activePlayer.board[x][y] === 's') {
+						$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-submarine');
+					} else if (this.activePlayer.board[x][y] === 'b') {
+						$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-battleship');
+					} else if (this.activePlayer.board[x][y] === 'a') {
+						$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-airCraft');
+					} 
+				}
+			} 
 		}
-		for (let y = 0; y < this.activePlayer.board.length; y++) {
-			for (let x = 0; x < this.activePlayer.board.length; x++) {
-				if (this.activePlayer.board[x][y] === 'd') {
-					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-destroyer');
-				} else if (this.activePlayer.board[x][y] === 'c') {
-					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-cruiser');
-				} else if (this.activePlayer.board[x][y] === 's') {
-					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-submarine');
-				} else if (this.activePlayer.board[x][y] === 'b') {
-					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-battleship');
-				} else if (this.activePlayer.board[x][y] === 'a') {
-					$(`.grid-item[data-square=${x}-${y}]`).addClass('grid-item-airCraft');
-				} 
-			}
-		} 
+
 	},
 	// checkDirection(){ //this goes through the 2d array and checks to see if it is first vertical and then horizontal
 	// 	// x columns   y is rows 
@@ -365,6 +348,11 @@ const game = {
 		$('#p2HitsStats').text(`Hits: ${player2.hits}`);
 		$('#p2MissesStats').text(`Misses: ${player2.misses}`);
 	},
+	//assumes that a player has won
+	// looks through the inactive players board looks through the every element checks if it is a string that is uppercase and not just a single element and there aren't any lowercase elements
+		//if there is a lowercase element changes the activePlayerWon to false
+			//if the active player is false switches player battle continues
+			//else activePlayer is true and we have a winner 
 	checkWinners(){
 		console.log("checking winners");
 		let activePlayerWon = true;
@@ -384,16 +372,12 @@ const game = {
 			console.log('you won');
 			$('.battle-grid').off('click', (e) => {
 			this.setOrBattle(e.target.dataset);
-			console.log('congrats');
 		});
+			$('#p1Header').text('GAME OVER');
+			$('#p2Header').text('GAME OVER');
+			$('.grid-item').css('backgroundColor','black');
 		}
 	},
-
-
-
-
-
-	//remove alert
 	displayInstructions(){
 		alert(`The Goal:\n - Sink your opponnet's fleet before the opponnet sinks your fleet.\n\n How To Play:\n - Players will place fleet to the length of the fleet on their respective battle grid.\n - Once fleets have been placed, each player will take turn firing at their opponnets battle grid by clicking on their opponnet's grid.\n - Players will fire on opponnet's battle grid until they miss.`)
 	}
