@@ -149,7 +149,7 @@ const game = {
 		if (this.userPicks.length === 2) {
 
 			//if the cols are even change y
-			if (this.userPicks[0][0] === this.userPicks[1][0]) { console.log("horiz");
+			if (this.userPicks[0][0] === this.userPicks[1][0]) { 
 				//this makes the difference an absolute value
 				let diff_y = Math.abs(this.userPicks[1][1] - this.userPicks[0][1]);
 
@@ -167,7 +167,7 @@ const game = {
 			} else if (this.userPicks[0][1] === this.userPicks[1][1]) {
 				let diff = Math.abs(this.userPicks[1][1] - this.userPicks[0][1])
 				for (let i = 0; i <= diff; i++) {
-					console.log('vertical');
+					
 					this.fleet[this.placingShip];
 					// vertical placement below
 					for (let i = this.userPicks[0][0]; i <= this.userPicks[1][0]; i++) {
@@ -181,9 +181,9 @@ const game = {
 				// 'done'
 				// later: change player
 			if (this.placingShip === 4) {
-				console.log("that was the last ship");
+				
 				if (this.activePlayer === this.p2 && !this.isBattling) {
-					console.log("that was p2's last ship, now battling");
+					
 					this.isBattling = true;
 				}
 				this.placingShip = 0;
@@ -208,15 +208,15 @@ const game = {
 	// 	alert(`${player} place your fleet:\n-The ${this.fleet[0]['typeOfShip']} has a length of ${this.fleet[0]['length']}.\n-The ${this.fleet[1]['typeOfShip']} has a length of ${this.fleet[1]['length']}.\n-The ${this.fleet[2]['typeOfShip']} has a length of ${this.fleet[2]['length']}.\n-The ${this.fleet[3]['typeOfShip']} has a length of ${this.fleet[3]['length']}.\n-The ${this.fleet[4]['typeOfShip']} has a length of ${this.fleet[4]['length']}.\nNote: Ships can be placed horizontally or vertically and they can not touch.`);
 	// },
 	switchPlayers() {
-		console.log("switching players");
+		
 		if (this.activePlayer === this.p1) {
-			console.log('you switched to p2');
+			
 			this.activePlayer = this.p2;
 			this.inactivePlayer = this.p1;
 		} else {
 			this.activePlayer = this.p1;
 			this.inactivePlayer = this.p2;
-			console.log('you switched to p1');
+			
 		}
 	},
 	//create a function that will change the html to show ships
@@ -295,22 +295,20 @@ const game = {
 	hitOrMiss(clickInfo){ 
 		// let cords = this.parseCoordinates(clickInfo);
 		// this.hitMiss.push(cords);
-		console.log("about to check hit or miss");
+		
 		const arr1 = clickInfo.square.split('');
 		const x = parseInt(arr1[0]);
 		const y = parseInt(arr1[2]);
-		console.log('set for battle');
-
+		
 		if (this.isBattling === true) {
  		// if (it's p1's turn and they clicked on p2's board) or (if it's p2's turn and they clicked on p1's board)
- 			console.log("this is clickInfo.player");
- 			console.log(clickInfo.player);
+ 			
 	 		if ((this.activePlayer === this.p1 && clickInfo.player === 'p2') || (this.activePlayer === this.p2 &&  clickInfo.player === 'p1')) {
 	 			//check stuff
 	 			if (this.inactivePlayer.board[x][y] == 0){
-		 			console.log('miss');
+		 			
 		 			$(`.grid-item[data-player=${clickInfo.player}][data-square=${clickInfo.square}]`).addClass('miss');
-		 			console.log(`.grid-item[data-player=${clickInfo.player}][data-square=${clickInfo.square}]`);
+		 			
 		 			this.switchPlayers();
 	 			} else if ((this.inactivePlayer.board[x][y] === 'd') || (this.inactivePlayer.board[x][y] === 'c') || (this.inactivePlayer.board[x][y] === 's') || (this.inactivePlayer.board[x][y] === 'b') || (this.inactivePlayer.board[x][y] === 'a')) {
 		 			$(`.grid-item[data-player=${clickInfo.player}][data-square=${clickInfo.square}]`).addClass('hit');
@@ -324,7 +322,7 @@ const game = {
 	 		} else {
 	 			alert(`not your turn`);
 	 		}
-	 		console.log("about to Check Winners");
+	 		
 	 	}  
 	},
 	setOrBattle(eventL){
